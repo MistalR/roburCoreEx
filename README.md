@@ -3,6 +3,6 @@ Robur Scripts with CoreEx
 
 Installation:
 
-Place the Orbwalker.lua and MTrist.lua in your "roburdirectory"\lol\Modules
+Place the LUA files in your "roburdirectory"\lol\Modules
 
 Enjoy
