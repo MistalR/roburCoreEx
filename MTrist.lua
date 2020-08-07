@@ -2,7 +2,7 @@ require("common.log")
 module("MTrist", package.seeall, log.setup)
 
 local _SDK = _G.CoreEx
-local ObjManager, EventManager, Input, Enums = _SDK.ObjectManager, _SDK.EventManager, _SDK.Input, _SDK.Enums
+local ObjManager, EventManager, Input, Enums, Game = _SDK.ObjectManager, _SDK.EventManager, _SDK.Input, _SDK.Enums, _SDK.Game
 local SpellSlots, SpellStates = Enums.SpellSlots, Enums.SpellStates 
 local Player = ObjManager.Player
 
@@ -67,6 +67,7 @@ end
 function OnLoad() 
 	if Player.CharName == "Tristana" then
 		EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
+		Game.PrintChat("MTristana Loaded !")
 		return true
 	end
 end
