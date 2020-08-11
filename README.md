@@ -17,7 +17,16 @@ Includes:
 
 - Combo with Q, E and BOTRK items.
 
+----------------------------------------------------------
+Autosmite Script for Robur, adapted from SoNiice
 
+Includes: 
+
+- Auto Smite On/Off with "M" key
+
+Edit list to include or disable smite for certain monsters.
+
+----------------------------------------------------------
 
 Integrated for default Orbwalker
 
