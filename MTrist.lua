@@ -12,7 +12,7 @@ local Player = ObjManager.Player
 local function getRdmg(target)
 	local tristR = {300, 400, 500}
 	local dmgR = tristR[Player:GetSpell(SpellSlots.R).Level]
-	return (dmgR + Player.TotalAP) * (100.0 / (100 + Player.FlatMagicReduction ) )
+	return (dmgR + Player.TotalAP) * (100.0 / (100 + target.FlatMagicReduction ) )
 end
 
 local function UseItems(target)	
