@@ -12,7 +12,7 @@ local function OnDraw()
     for handle, obj in pairs(enemies) do 
 		if obj.IsVisible and not obj.IsDead then
 			local turretRange = 750.0 + obj.BoundingRadius
-			Renderer.DrawCircle3D(obj.Position, turretRange, 100, 1.0, 0xFF0000FF)
+			Renderer.DrawCircle3D(obj.Position, turretRange, 20, 1.0, 0xFF0000FF)
 		end
 	end
 	
