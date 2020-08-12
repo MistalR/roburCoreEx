@@ -1,6 +1,9 @@
 require("common.log")
 module("MTrist", package.seeall, log.setup)
 
+local Orb = require("lol/Modules/Common/Orb")
+local ts = require("lol/Modules/Common/simpleTS")
+
 local _SDK = _G.CoreEx
 local ObjManager, EventManager, Input, Enums, Game = _SDK.ObjectManager, _SDK.EventManager, _SDK.Input, _SDK.Enums, _SDK.Game
 local SpellSlots, SpellStates = Enums.SpellSlots, Enums.SpellStates 
@@ -15,7 +18,7 @@ end
 local function UseItems(target)	
 	for i=SpellSlots.Item1, SpellSlots.Item6 do
 		local _item = Player:GetSpell(i)
-		if _item ~= nil then
+		if _item ~= nil and _item then
 			local itemInfo = _item.Name
 
 			if itemInfo == "ItemSwordOfFeastAndFamine" or itemInfo == "BilgewaterCutlass" then
@@ -55,9 +58,9 @@ local function AutoR()
 end 
 
 local function OnTick()			
-	local target = _G.OrbActive and _G.OrbTarget
-
+	
 	AutoR()
+	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowestHealth)
 	if target then 
 		Combo(target)
 		UseItems(target)
@@ -65,10 +68,10 @@ local function OnTick()
 end
 
 function OnLoad() 
-	if Player.CharName == "Tristana" then
-		EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
-		Game.PrintChat("MTristana Loaded !")
-		return true
-	end
+	if not Player.CharName == "Tristana" then return false end 
+	
+	EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
+	Game.PrintChat("MTristana Loaded !")
+	return true
 end
 
