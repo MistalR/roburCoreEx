@@ -96,7 +96,7 @@ local function OnTick()
 
 	AutoE()
 	
-	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowHPInRange)
+	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowestHealth)
 	if target then 
 		Combo(target)
 		if Player.Position:Distance(target.Position) <= 550 then
