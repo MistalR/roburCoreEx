@@ -12,7 +12,7 @@ local Player = ObjManager.Player
 local function getRdmg(target)
 	local tristR = {300, 400, 500}
 	local dmgR = tristR[Player:GetSpell(SpellSlots.R).Level]
-	return (dmgR + Player.TotalAP) * (100.0 / (100 + target.FlatMagicReduction ) )
+	return (dmgR + Player.TotalAP) * (100.0 / (100 + Player.FlatMagicReduction ) )
 end
 
 local function UseItems(target)	
@@ -60,7 +60,7 @@ end
 local function OnTick()			
 	
 	AutoR()
-	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowestHealth)
+	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowHPInRange)
 	if target then 
 		Combo(target)
 		UseItems(target)
@@ -68,9 +68,11 @@ local function OnTick()
 end
 
 function OnLoad() 
-	if not Player.CharName == "Tristana" then return false end 
+	if Player.CharName ~= "Tristana" then return false end 
 	
 	EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
+	Orb.Load()
+	Orb.Setting.Drawing.BoundingRadius.EnemyMinion.Active = false
 	Game.PrintChat("MTristana Loaded !")
 	return true
 end
