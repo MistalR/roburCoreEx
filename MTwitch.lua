@@ -1,8 +1,7 @@
 require("common.log")
 module("MTwitch", package.seeall, log.setup)
 
-local Orb = require("lol/Modules/Common/Orb")
-local ts = require("lol/Modules/Common/simpleTS")
+local Orbwalker = require("lol/Modules/Common/OGOrbWalker")
 
 local _SDK = _G.CoreEx
 local ObjManager, EventManager, Input, Enums, Game = _SDK.ObjectManager, _SDK.EventManager, _SDK.Input, _SDK.Enums, _SDK.Game
@@ -64,7 +63,7 @@ end
 
 local function Combo(target)
 	if Player:GetSpellState(SpellSlots.E) == SpellStates.Ready then
-		local target = ts:GetTarget(1200,ts.Priority.LowestHealth)
+		--local target = ts:GetTarget(1200,ts.Priority.LowestHealth)
 		local buffCountVenom = countEStacks(target)
 
 		if buffCountVenom > 5 then
@@ -96,7 +95,7 @@ local function OnTick()
 
 	AutoE()
 	
-	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowestHealth)
+	local target = Orbwalker.Mode == 1 and Orbwalker.CurrentTarget
 	if target then 
 		Combo(target)
 		if Player.Position:Distance(target.Position) <= 550 then
@@ -109,8 +108,8 @@ function OnLoad()
 	if Player.CharName ~= "Twitch" then return false end 
 	
 	EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
-	Orb.Load()
-	Orb.Setting.Drawing.BoundingRadius.EnemyMinion.Active = false
+	Orbwalker.Initialize()
+	
 	Game.PrintChat("MTwitch Loaded !")
 	return true
 end
