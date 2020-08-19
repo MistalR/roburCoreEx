@@ -1,8 +1,7 @@
 require("common.log")
 module("MTrist", package.seeall, log.setup)
 
-local Orb = require("lol/Modules/Common/Orb")
-local ts = require("lol/Modules/Common/simpleTS")
+local Orbwalker = require("lol/Modules/Common/OGOrbWalker")
 
 local _SDK = _G.CoreEx
 local ObjManager, EventManager, Input, Enums, Game = _SDK.ObjectManager, _SDK.EventManager, _SDK.Input, _SDK.Enums, _SDK.Game
@@ -60,7 +59,7 @@ end
 local function OnTick()			
 	
 	AutoR()
-	local target = Orb.Mode.Combo and ts:GetTarget(Player.AttackRange + Player.BoundingRadius, ts.Priority.LowHPInRange)
+	local target = Orbwalker.Mode == 1 and Orbwalker.CurrentTarget
 	if target then 
 		Combo(target)
 		UseItems(target)
@@ -71,8 +70,8 @@ function OnLoad()
 	if Player.CharName ~= "Tristana" then return false end 
 	
 	EventManager.RegisterCallback(Enums.Events.OnTick, OnTick)
-	Orb.Load()
-	Orb.Setting.Drawing.BoundingRadius.EnemyMinion.Active = false
+	Orbwalker.Initialize()
+
 	Game.PrintChat("MTristana Loaded !")
 	return true
 end
